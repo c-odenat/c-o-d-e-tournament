@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Code-Risk Utility</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">⚙️</div>
+      <div>
+        <div class="brand-title">Arbitrage & Risk Dashboard</div>
+        <div class="brand-sub">Utility toolkit</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <div class="seg">
+        <button class="seg-btn is-active" data-theme="dark">Dark</button>
+        <button class="seg-btn" data-theme="light">Light</button>
+        <button class="seg-btn" data-theme="system">System</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- App layout -->
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="side-title">Tools</div>
+
+      <nav class="nav">
+        <button class="nav-item is-active" data-view="arb">
+          <span class="dot dot-green"></span> Arbitrage
+        </button>
+        <button class="nav-item" data-view="cover">
+          <span class="dot dot-blue"></span> Covering Array
+        </button>
+        <button class="nav-item" data-view="compound">
+          <span class="dot dot-yellow"></span> Compounder
+        </button>
+        <button class="nav-item" data-view="calc">
+          <span class="dot dot-purple"></span> Calculator
+        </button>
+      </nav>
+
+      <div class="side-footer">
+        <div class="hint">Tip: Use 2-way for Over/Under, Yes/No markets.</div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+
+      <!-- ============== ARBITRAGE VIEW ============== -->
+      <section class="view is-visible" id="view-arb">
+        <div class="page-head">
+          <div>
+            <h1>Arbitrage</h1>
+            <p class="muted">Check arb and calculate optimal stake split.</p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <!-- Input panel -->
+          <div class="panel">
+            <div class="panel-title">Inputs</div>
+
+            <div class="row">
+              <label class="lbl">Mode</label>
+              <div class="seg w-full" id="arb-mode">
+                <button class="seg-btn is-active" data-mode="2">2-way</button>
+                <button class="seg-btn" data-mode="3">3-way</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="lbl">Odd A (Home / Outcome A)</label>
+              <input class="inp" id="arb-odd-a" placeholder="e.g. 20" />
+            </div>
+
+            <div class="row">
+              <label class="lbl">Odd B (Away / Outcome B)</label>
+              <input class="inp" id="arb-odd-b" placeholder="e.g. 1.13" />
+            </div>
+
+            <div class="row" id="arb-draw-row" style="display:none;">
+              <label class="lbl">Odd Draw</label>
+              <input class="inp" id="arb-odd-d" placeholder="e.g. 4.20" />
+            </div>
+
+            <div class="row">
+              <label class="lbl">Total Stake</label>
+              <input class="inp" id="arb-stake" placeholder="e.g. 100" />
+            </div>
+
+            <button class="btn-primary" id="btn-arb">Check Arbitrage</button>
+            <div class="note" id="arb-error"></div>
+          </div>
+
+          <!-- Results panel -->
+          <div class="panel">
+            <div class="panel-title">Results</div>
+
+            <div class="cards" id="arb-cards">
+              <!-- cards injected -->
+            </div>
+
+            <div class="table-wrap">
+              <table class="tbl" id="arb-table">
+                <thead>
+                  <tr>
+                    <th>Outcome</th>
+                    <th>Odd</th>
+                    <th>Stake</th>
+                    <th>Payout</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- rows injected -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== COVERING ARRAY VIEW ============== -->
+      <section class="view" id="view-cover">
+        <div class="page-head">
+          <div>
+            <h1>Covering Array</h1>
+            <p class="muted">Generate pairwise tickets (a/b) for N games.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="row inline">
+            <div class="field">
+              <div class="lbl">Number of games</div>
+              <input class="inp" id="cover-games" placeholder="10" />
+            </div>
+
+            <button class="btn-primary" id="btn-cover">Generate</button>
+
+            <div class="pill" id="cover-meta">Tickets: —</div>
+          </div>
+        </div>
+
+        <div class="board" id="cover-board">
+          <!-- ticket cards injected -->
+        </div>
+      </section>
+
+      <!-- ============== COMPOUNDER VIEW ============== -->
+      <section class="view" id="view-compound">
+        <div class="page-head">
+          <div>
+            <h1>Compounder</h1>
+            <p class="muted">Progressive compounding calculator with step breakdown.</p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-title">Inputs</div>
+
+            <div class="row">
+              <label class="lbl">Initial capital</label>
+              <input class="inp" id="cmp-capital" placeholder="e.g. 50" />
+            </div>
+            <div class="row">
+              <label class="lbl">Multiplier</label>
+              <input class="inp" id="cmp-mult" placeholder="e.g. 1.05" />
+            </div>
+            <div class="row">
+              <label class="lbl">Steps</label>
+              <input class="inp" id="cmp-steps" placeholder="e.g. 30" />
+            </div>
+
+            <button class="btn-primary" id="btn-compound">Run</button>
+            <div class="note" id="cmp-error"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Summary</div>
+            <div class="cards" id="cmp-cards"></div>
+
+            <div class="table-wrap">
+              <table class="tbl" id="cmp-table">
+                <thead>
+                  <tr>
+                    <th>Step</th>
+                    <th>Capital</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== CALCULATOR VIEW ============== -->
+      <section class="view" id="view-calc">
+        <div class="page-head">
+          <div>
+            <h1>Calculator</h1>
+            <p class="muted">A proper keypad calculator (not a tiny input).</p>
+          </div>
+        </div>
+
+        <div class="calc">
+          <div class="calc-screen">
+            <div class="calc-mini" id="calc-mini">Ready</div>
+            <div class="calc-big" id="calc-big">0</div>
+          </div>
+
+          <div class="calc-grid" id="calc-grid">
+            <!-- buttons injected -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="./renderer.js"></script>
+</body>
+</html>

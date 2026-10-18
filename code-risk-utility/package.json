@@ -1,0 +1,13 @@
+{
+  "name": "code-risk-utility",
+  "version": "1.0.0",
+  "description": "Arbitrage & Risk Engineering Utility",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^30.0.0"
+  }
+}
